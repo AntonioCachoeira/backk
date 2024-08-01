@@ -16,9 +16,9 @@ app.post('/produto/', async(req,res)=>{
     const dados = req.body
     try{
         const pesq =await Produto.create(dados,{raw:true})
-        res.status(200).json(pesq)
+        res.status(201).json(pesq)
     }catch{
-        res.status(200).json('n rodou')
+        res.status(500).json('n rodou')
     }
 })
 app.post('/fabricante', async(req,res)=>{
@@ -35,7 +35,7 @@ app.get('/produtos/:nome', async(req,res)=>{
     const dados = req.params
     try{
         const pesq = await Produto.findOne({raw:true, where:{nome: dados.nome}})
-        res.status(200).json(pesq)
+        res.status(201).json(pesq)
     }catch{
         res.status(500).json('n rodou')
     }
@@ -47,6 +47,24 @@ app.get('/fabricantes/:marca', async(req,res)=>{
         res.status(200).json(pesq)
     }catch{
         res.status(500).json('n rodou')
+    }
+})
+/*-------------------------DELETE-------------------------------------------- */
+app.delete('/fabricante/:codFabricante', async(req,res)=>{
+    const dados = req.params.codFabricante
+    try{
+        const pesq = await Fabricante.destroy({where:{codFabricante}})
+        res.status(200).json(pesq, 'apagado com sucesso')
+    }catch{
+        res.status(500).json('n deletou')
+    }
+})
+app.delete('/produto/:codProduto', async(req,res)=>{
+    const dados = req.params.id
+    try{
+        res.status(200).json(pesq, 'apagado com sucesso')
+    }catch{
+        res.status(500).json('n deletou')
     }
 })
 
